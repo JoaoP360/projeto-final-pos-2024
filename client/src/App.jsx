@@ -1,17 +1,18 @@
-import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Login from './pages/login';
-import Register from './pages/register';
+import { Outlet } from "react-router-dom";
+import './App.css'
+
+import Navbar from './components/Navbar'
 
 function App() {
+
   return (
-    <Router>
-      <Routes>
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-      </Routes>
-    </Router>
-  );
+    <>
+      <Navbar />
+      <div className="container mt-3">
+        <Outlet />
+      </div>
+    </>
+  )
 }
 
-export default App;
+export default App
