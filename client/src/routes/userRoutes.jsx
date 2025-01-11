@@ -1,4 +1,4 @@
-import ListUsers from '../pages/users/ListUsers.jsx';
+import ListUsers from '../pages/users/ListUser.jsx';
 import CreateUser from '../pages/users/CreateUser.jsx';
 import UpdateUser from '../pages/users/UpdateUser.jsx';
 import DeleteUser from '../pages/users/DeleteUser.jsx';

@@ -5,11 +5,11 @@ import './index.css';
 import App from './App.jsx';
 
 // Pages
-import Home from './pages/Home.jsx';
+import Home from './pages/home.jsx';
 
 // Routes
-import userRoutes from './routes/userRoutes';
-import todosRoutes from './routes/todosRoutes';
+import userRoutes from './routes/userRoutes.jsx';
+import todosRoutes from './routes/todosRoutes.jsx';
 import albunsRoutes from './routes/albunsRoutes.jsx';
 import photosRoutes from './routes/photosRoutes.jsx';
 

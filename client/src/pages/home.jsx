@@ -6,7 +6,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 const userWrapper = new UserWapper();
 
 const Home = () => {
-  const [users, setUsers] = useState([]);
+  const [users, setUsers] = useState([]); // Inicializa como array vazio
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
@@ -14,9 +14,9 @@ const Home = () => {
     try {
       setIsLoading(true);
       const response = await userWrapper.listUser("users/");
-      setUsers(response.data);
+      setUsers(response?.data || []); // Garante que `users` será um array
     } catch (error) {
-      setError(error);
+      setError(error.message || "Ocorreu um erro ao carregar os usuários.");
     } finally {
       setIsLoading(false);
     }
@@ -44,6 +44,14 @@ const Home = () => {
       </div>
 
       <h1>Usuários</h1>
+
+      {isLoading && <p>Carregando usuários...</p>}
+      {error && <p className="text-danger">{error}</p>}
+
+      {!isLoading && !error && users.length === 0 && (
+        <p>Nenhum usuário encontrado.</p>
+      )}
+
       {!isLoading && !error && users.length > 0 && (
         <div className="mb-4 d-flex gap-2">
           {users.map((user) => (

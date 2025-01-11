@@ -13,19 +13,24 @@ const ListUsers = () => {
 
     const fetchUsers = async () => {
         try {
-            setIsLoading(true)
+            setIsLoading(true);
             const response = await apiWrapper.listUser('users/');
-            setUsers(response.data)
+            if (response.success && Array.isArray(response.data)) {
+                setUsers(response.data);
+            } else {
+                setUsers([]);
+                setError("Não foi possível carregar os usuários.");
+            }
         } catch (error) {
-            setError(error)
+            setError("Algo deu errado ao carregar os usuários.");
         } finally {
-            setIsLoading(false)
+            setIsLoading(false);
         }
     };
 
     useEffect(() => {
-        fetchUsers()
-    }, [])
+        fetchUsers();
+    }, []);
 
     return (
         <>
@@ -34,31 +39,30 @@ const ListUsers = () => {
                 Cadastrar usuário
             </Link>
 
-            {/* Se usuário for deletado */}
-            {location.state && location.state.message && (
-                <div className = {`alert alert-${location.state.type}`}>
+            {location.state?.message && (
+                <div className={`alert alert-${location.state.type}`}>
                     Usuário <b>{location.state.user}</b> {location.state.message}
                 </div>
             )}
 
-            {/* Se estiver carregando */}
-            {isLoading && (<p>Carregando usuários</p>)}
+            {isLoading && (<p>Carregando usuários...</p>)}
+            {error && (<p className="text-danger">{error}</p>)}
 
-            {/* Se der erro */}
-            {error && (<p>Algo deu errado em nosso site. A culpa não foi sua!</p>)}
+            {!isLoading && !error && Array.isArray(users) && users.length === 0 && (
+                <p>Não há usuários registrados.</p>
+            )}
 
-            {/* Quando terminar a requisição */}
-            {!isLoading && !error && users.length > 0 && (
+            {!isLoading && !error && Array.isArray(users) && users.length > 0 && (
                 <table className='table table-striped'>
                     <thead>
                         <tr>
-                            <td>ID</td>
-                            <td>Nome</td>
-                            <td>Opções</td>
+                            <th>ID</th>
+                            <th>Nome</th>
+                            <th>Opções</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {users.map((user)=>(
+                        {users.map((user) => (
                             <tr key={user.id}>
                                 <td>{user.id}</td>
                                 <td><Link to={`/usuarios/${user.id}`}>{user.name}</Link></td>
@@ -71,10 +75,8 @@ const ListUsers = () => {
                     </tbody>
                 </table>
             )}
-
-            {!isLoading && !error && users.length == 0 && (<p>Usuários não encontrados</p>)}
         </>
-    )
-}
+    );
+};
 
-export default ListUsers
+export default ListUsers;
