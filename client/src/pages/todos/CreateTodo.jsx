@@ -34,11 +34,24 @@ const CreateTodo = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await todoWrapper.createTodo("todos/", todoData);
-      setTodoData({ title: "", user: "", is_complete: false });
-      navigate("/tarefas/");
-    } catch (error) {
-      setError("Não foi possível cadastrar a tarefa.");
+      const response = await todoWrapper.createTodo("todos/", todoData);
+      console.log("Resposta da API:", response);  // Verificar a resposta
+
+      if (response.success) {
+        setTodoData({ title: "", user: "", is_complete: false });
+        navigate("/tarefas/");
+      } else {
+        setError(response.message || "Não foi possível cadastrar a tarefa.");
+      }
+    } catch (err) {
+      console.error("Erro ao cadastrar a tarefa:", err);
+
+      // Verifique se o erro é devido a uma resposta HTML
+      if (err.message.includes("<!DOCTYPE html>")) {
+        setError("O servidor retornou uma página HTML. Verifique o endpoint e o servidor.");
+      } else {
+        setError("Não foi possível cadastrar a tarefa.");
+      }
     }
   };
 
