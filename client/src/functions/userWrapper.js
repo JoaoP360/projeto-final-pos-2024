@@ -1,16 +1,14 @@
 class UserWrapper {
-    baseUrl = 'http://127.0.0.1:8000/api/'
-    
-    // Listar todos os itens
+    baseUrl = 'http://127.0.0.1:8000/api/';
+
+    // Listar todos os usuários
     async listUser(endpoint) {
         try {
             const response = await fetch(`${this.baseUrl}${endpoint}`);
-
             if (!response.ok) {
                 const errorResponse = await response.json();
                 throw { success: false, message: errorResponse.message, status: response.status };
             }
-
             const data = await response.json();
             return { success: true, data: data, status: response.status };
         } catch (error) {
@@ -18,16 +16,14 @@ class UserWrapper {
         }
     }
 
-    // Obter detalhes de um item
+    // Obter detalhes de um usuário
     async detailUser(endpoint, id) {
         try {
             const response = await fetch(`${this.baseUrl}${endpoint}${id}/`);
-
             if (!response.ok) {
                 const errorResponse = await response.json();
                 throw { success: false, message: errorResponse.message, status: response.status };
             }
-
             const data = await response.json();
             return { success: true, data: data, status: response.status };
         } catch (error) {
@@ -35,7 +31,7 @@ class UserWrapper {
         }
     }
 
-    // Criar um novo item
+    // Criar um novo usuário
     async createUser(endpoint, data) {
         try {
             const response = await fetch(`${this.baseUrl}${endpoint}`, {
@@ -43,7 +39,11 @@ class UserWrapper {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(data),
+                body: JSON.stringify({
+                    name: data.name,
+                    username: data.username, // Aqui está o campo correto
+                    email: data.email, // Verifique se este campo é necessário também
+                }),
             });
 
             if (!response.ok) {
@@ -58,7 +58,7 @@ class UserWrapper {
         }
     }
 
-    // Atualizar um item existente
+    // Atualizar um usuário
     async updateUser(endpoint, id, data) {
         try {
             const response = await fetch(`${this.baseUrl}${endpoint}${id}/`, {
@@ -81,7 +81,7 @@ class UserWrapper {
         }
     }
 
-    // Deletar um item
+    // Deletar um usuário
     async deleteUser(endpoint, id) {
         try {
             const response = await fetch(`${this.baseUrl}${endpoint}${id}/`, {
@@ -103,4 +103,4 @@ class UserWrapper {
     }
 }
 
-export default UserWrapper
+export default UserWrapper;
