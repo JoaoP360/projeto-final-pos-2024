@@ -1,59 +1,56 @@
-import { useEffect, useState } from "react";
-import { Link, useLocation } from 'react-router-dom';
-import AlbumWrapper from "../../functions/albumWrapper";
+import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import AlbumWrapper from '../../functions/albumWrapper';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-const albumWrapper = new AlbumWrapper();
+const apiWrapper = new AlbumWrapper();
 
 const ListAlbuns = () => {
-    const [albuns, setAlbuns] = useState([]);
-    const [isLoading, setIsLoading] = useState(false)
-    const [error, setError] = useState(null)
-    const location = useLocation()
+    const [albuns, setAlbuns] = useState([]); // Inicializar como uma lista vazia
+    const [error, setError] = useState(null);
+    const [isLoading, setIsLoading] = useState(true);
 
     const fetchAlbuns = async () => {
         try {
             setIsLoading(true);
-            const response = await albumWrapper.listAlbuns('albuns/');
-            setAlbuns(response.data);
-        } catch (error) {
-            setError(error)
+            const response = await apiWrapper.listAlbum('albuns/');
+            if (response?.data && Array.isArray(response.data)) {
+                setAlbuns(response.data);
+            } else {
+                throw new Error('Estrutura de resposta inesperada');
+            }
+        } catch (err) {
+            setError(err.message || 'Erro ao buscar álbuns.');
         } finally {
-            setIsLoading(false)
+            setIsLoading(false);
         }
-    }
+    };
 
     useEffect(() => {
-        fetchAlbuns()
-    }, [])
+        fetchAlbuns();
+    }, []);
 
     return (
         <>
-            <h1>Lista de albuns</h1>
-            <Link to={'/albuns/cadastrar/'} className="btn btn-primary">Cadastrar álbum</Link>
+            <h1>Álbuns</h1>
+            <Link to={'/albuns/cadastrar/'} className="btn btn-primary">
+                Cadastrar álbum
+            </Link>
 
-            {/* Se alguma tarefa for deletada */}
-            {location.state && location.state.message && (
-                <div className={`alert alert-${location.state.type}`}>
-                    {location.state.message}
-                </div>
-            )}
+            {/* Mensagem de carregamento */}
+            {isLoading && <p>Carregando álbuns...</p>}
 
-            {/* Se estiver carregando */}
-            {isLoading && (<p>Carregando albuns</p>)}
+            {/* Mensagem de erro */}
+            {error && <p className="text-danger">{error}</p>}
 
-            {/* Se tiver erro */}
-            {!isLoading && error && (<p>Erro no cliente</p>)}
-
-            {/* Se tiver tarefas */}
+            {/* Exibição dos álbuns */}
             {!isLoading && !error && albuns.length > 0 && (
                 <table className="table table-striped">
                     <thead>
                         <tr>
-                            <td>ID</td>
-                            <td>Albúm</td>
-                            <td>Usuário</td>
-                            <td>Opção</td>
+                            <th>ID</th>
+                            <th>Título</th>
+                            <th>Opções</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -61,10 +58,19 @@ const ListAlbuns = () => {
                             <tr key={album.id}>
                                 <td>{album.id}</td>
                                 <td>{album.title}</td>
-                                <td>{album.user}</td>
                                 <td>
-                                    <Link to={`/albuns/deletar/${album.id}/`} className="btn btn-danger">Deletar</Link>
-                                    <Link to={`/albuns/atualizar/${album.id}/`} className="btn btn-primary">Atualizar</Link>
+                                    <Link
+                                        to={`/albuns/editar/${album.id}/`}
+                                        className="btn btn-primary"
+                                    >
+                                        Editar
+                                    </Link>
+                                    <Link
+                                        to={`/albuns/deletar/${album.id}/`}
+                                        className="btn btn-danger"
+                                    >
+                                        Deletar
+                                    </Link>
                                 </td>
                             </tr>
                         ))}
@@ -72,9 +78,12 @@ const ListAlbuns = () => {
                 </table>
             )}
 
-            {!isLoading && !error && albuns.length == 0 && (<p>Albuns não encontrados</p>)}
+            {/* Caso não haja álbuns */}
+            {!isLoading && !error && albuns.length === 0 && (
+                <p>Não há álbuns cadastrados no momento.</p>
+            )}
         </>
-    )
-}
+    );
+};
 
 export default ListAlbuns;
