@@ -14,6 +14,7 @@ router.register(r'posts', PostViewSet)
 router.register(r'comments', CommentViewSet)
 router.register(r'albums', AlbumViewSet)
 router.register(r'photos', PhotoViewSet)
+router.register(r'todos', views.TodoViewSet)
 
 urlpatterns = router.urls
 from django.urls import path # type: ignore

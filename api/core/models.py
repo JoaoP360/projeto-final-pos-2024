@@ -40,3 +40,11 @@ class Photo(models.Model):
 
     def __str__(self):
         return self.title
+
+class Todo(models.Model):
+    title = models.CharField(max_length=200)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="todos")
+    is_complete = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.title

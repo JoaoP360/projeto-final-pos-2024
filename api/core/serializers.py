@@ -1,5 +1,5 @@
 from rest_framework import serializers # type: ignore
-from .models import User, Post, Comment, Album, Photo
+from .models import User, Post, Comment, Album, Photo, Todo
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -24,4 +24,9 @@ class AlbumSerializer(serializers.ModelSerializer):
 class PhotoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Photo
+        fields = '__all__'
+
+class TodoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Todo
         fields = '__all__'

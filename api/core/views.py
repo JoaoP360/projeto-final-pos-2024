@@ -1,10 +1,8 @@
-from rest_framework import viewsets, status
-from .models import User, Post, Comment, Album, Photo
+from rest_framework import viewsets
+from .models import User, Post, Comment, Album, Photo, Todo
 from rest_framework.response import Response
-from .serializers import UserSerializer, PostSerializer, CommentSerializer, AlbumSerializer, PhotoSerializer
+from .serializers import UserSerializer, PostSerializer, CommentSerializer, AlbumSerializer, PhotoSerializer, TodoSerializer
 from django.http import HttpResponse
-
-import json
 
 def home(request):
     return HttpResponse("Bem-vindo!")
@@ -28,3 +26,8 @@ class AlbumViewSet(viewsets.ModelViewSet):
 class PhotoViewSet(viewsets.ModelViewSet):
     queryset = Photo.objects.all()
     serializer_class = PhotoSerializer
+
+
+class TodoViewSet(viewsets.ModelViewSet):
+    queryset = Todo.objects.all()
+    serializer_class = TodoSerializer
