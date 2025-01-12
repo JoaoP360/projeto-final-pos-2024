@@ -1,5 +1,5 @@
 .active {
-  background-color: #1d4ed8;
+  background-color: #A6CDC6;
 }
 
 .brand {
@@ -13,7 +13,7 @@ nav {
   display: flex;
   justify-content: space-between;
   align-items: baseline;
-  background-color: #0f172a;
+  background-color: #16404D;
   padding: 1em;
   position: sticky;
   top: 0;
