@@ -5,7 +5,7 @@ python -m venv venv
 
 
 ## Ativar a Venv
-.venv\Scripts\activate
+.venv\Scripts\activate.ps1
 
 ## Baixar os requirements.txt
 pip install -r requirements.txt
