@@ -26,11 +26,15 @@ class Comment(models.Model):
         return self.name
 
 class Album(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="albums")
-    title = models.CharField(max_length=200)
+    title = models.CharField(verbose_name='Nome', max_length=50)
+    user = models.ForeignKey(User, related_name="user", on_delete=models.PROTECT)
 
+    class Meta:
+        verbose_name = 'Álbum' 
+        verbose_name_plural = 'Álbuns'
+        
     def __str__(self):
-        return self.title
+        return f'{self.title}'
 
 class Photo(models.Model):
     album = models.ForeignKey(Album, on_delete=models.CASCADE, related_name="photos")
