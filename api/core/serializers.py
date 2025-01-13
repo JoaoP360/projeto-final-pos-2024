@@ -16,27 +16,13 @@ class CommentSerializer(serializers.ModelSerializer):
         model = Comment
         fields = '__all__'
 
+
 class AlbumSerializer(serializers.ModelSerializer):
-    user = serializers.CharField(source='user.name')
-    user_id = serializers.IntegerField(source='user.id', read_only=True)
+    user = serializers.PrimaryKeyRelatedField(queryset=User.objects.all())
+
     class Meta:
         model = Album
-        fields = ['id', 'title', 'user', 'user_id']
-        
-    def create(self, validate_data):
-        user_id = validate_data.pop('user')['name']
-        try:
-            user = User.objects.get(id=user_id)
-        except User.DoesNotExist:
-            raise serializers.ValidationError({"user": "Usuário não encontrado."})
-
-        album = Album.objects.create(user=user, **validate_data)
-        return album
-    
-    def update(self, instance, validate_data):
-        instance.title = validate_data.get('title', instance.title)
-        instance.save()
-        return instance
+        fields = ['id', 'title', 'user']
 
 class PhotoSerializer(serializers.ModelSerializer):
     class Meta:

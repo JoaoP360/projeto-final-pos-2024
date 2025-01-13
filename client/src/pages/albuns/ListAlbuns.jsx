@@ -15,7 +15,8 @@ const ListAlbuns = () => {
     try {
       setIsLoading(true);
       const response = await albumWrapper.listAlbuns("albuns/");
-      setAlbuns(response.data || []); // Garante que será um array
+      console.log("Retorno da API:", response); // Para depurar o retorno da API
+      setAlbuns(response || []); // Garante que será um array
     } catch (error) {
       setError(error);
     } finally {
@@ -42,16 +43,16 @@ const ListAlbuns = () => {
 
       {isLoading && <p>Carregando álbuns...</p>}
 
-      {!isLoading && error && <p>Erro no cliente</p>}
+      {!isLoading && error && <p>Erro ao buscar álbuns: {error.message}</p>}
 
       {!isLoading && !error && Array.isArray(albuns) && albuns.length > 0 && (
         <table className="table table-striped">
           <thead>
             <tr>
-              <td>ID</td>
-              <td>Álbum</td>
-              <td>Usuário</td>
-              <td>Opção</td>
+              <th>ID</th>
+              <th>Álbum</th>
+              <th>Usuário</th>
+              <th>Opção</th>
             </tr>
           </thead>
           <tbody>
@@ -61,16 +62,10 @@ const ListAlbuns = () => {
                 <td>{album.title}</td>
                 <td>{album.user}</td>
                 <td>
-                  <Link
-                    to={`/albuns/deletar/${album.id}/`}
-                    className="btn btn-danger"
-                  >
+                  <Link to={`/albuns/deletar/${album.id}/`} className="btn btn-danger">
                     Deletar
                   </Link>
-                  <Link
-                    to={`/albuns/atualizar/${album.id}/`}
-                    className="btn btn-primary"
-                  >
+                  <Link to={`/albuns/atualizar/${album.id}/`} className="btn btn-primary">
                     Atualizar
                   </Link>
                 </td>
@@ -79,7 +74,6 @@ const ListAlbuns = () => {
           </tbody>
         </table>
       )}
-
 
       {!isLoading && !error && Array.isArray(albuns) && albuns.length === 0 && (
         <p>Álbuns não encontrados</p>

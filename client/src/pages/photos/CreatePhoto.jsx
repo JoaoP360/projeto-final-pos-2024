@@ -8,23 +8,23 @@ const photoWrapper = new PhotoWrapper();
 const albumWrapper = new AlbumWrapper();
 
 const CreatePhoto = () => {
-  const [albuns, setAlbuns] = useState([]);
-  const [photoData, setPhotoData] = useState({ title: "", album: "", url: "" });
-  const [fieldErrors, setFieldErrors] = useState({});
+  const [albums, setAlbums] = useState([]);
+  const [photoData, setPhotoData] = useState({ title: "", url: "", album: "" });
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
-  const fetchAlbuns = async () => {
+  // Função para buscar álbuns
+  const fetchAlbums = async () => {
     try {
-      const response = await albumWrapper.listAlbuns("albuns/");
-      setAlbuns(response.data);
+      const response = await albumWrapper.listAlbum("albums/");
+      setAlbums(response.data || []); // Verifique se `response.data` existe
     } catch (error) {
-      setError(error);
+      setError("Erro ao carregar álbuns.");
     }
   };
 
   useEffect(() => {
-    fetchAlbuns();
+    fetchAlbums();
   }, []);
 
   const handleChange = (e) => {
@@ -34,22 +34,18 @@ const CreatePhoto = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (photoData.url.length > 200) {
-      setFieldErrors({ url: "A URL deve ter menos de 200 caracteres." });
-      return;
-    }
     try {
       await photoWrapper.createPhoto("photos/", photoData);
-      setPhotoData({ title: "", user: "", url: "" });
-      navigate("/fotos/");
+      navigate("/photos/");
     } catch (error) {
-      setError("Não foi possível cadastrar a foto");
+      setError("Erro ao criar a foto.");
     }
   };
 
   return (
     <>
-      <h1>Salvar foto</h1>
+      <h1>Criar Foto</h1>
+      {error && <p className="text-danger">{error}</p>}
       <form className="row" onSubmit={handleSubmit}>
         <div className="col-md-12 mb-3">
           <label htmlFor="title" className="form-label">
@@ -66,20 +62,16 @@ const CreatePhoto = () => {
         </div>
         <div className="col-md-12 mb-3">
           <label htmlFor="url" className="form-label">
-            URL
+            URL da Foto
           </label>
           <input
-            type="text"
+            type="url"
             name="url"
             id="url"
-            className={`form-control ${fieldErrors.url ? "is-invalid" : ""}`}
-            placeholder="Coloque a URL da foto"
+            className="form-control"
             required
             onChange={handleChange}
           />
-          {fieldErrors.url && (
-            <div className="invalid-feedback">{fieldErrors.url}</div>
-          )}
         </div>
         <div className="col-md-12 mb-3">
           <label htmlFor="album" className="form-label">
@@ -92,15 +84,19 @@ const CreatePhoto = () => {
             required
             onChange={handleChange}
           >
-            <option selected>Selecione um álbum</option>
-            {albuns.map((album) => (
-              <option value={album.id}>{album.title}</option>
-            ))}
+            <option value="">Selecione um álbum</option>
+            {/* Verificação para garantir que `albums` não seja undefined */}
+            {albums.length > 0 &&
+              albums.map((album) => (
+                <option key={album.id} value={album.id}>
+                  {album.title}
+                </option>
+              ))}
           </select>
         </div>
         <div>
           <button type="submit" className="btn btn-success">
-            Cadastrar
+            Cadastrar Foto
           </button>
         </div>
       </form>

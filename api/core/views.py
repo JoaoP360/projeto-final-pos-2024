@@ -22,12 +22,7 @@ class CommentViewSet(viewsets.ModelViewSet):
 class AlbumViewSet(viewsets.ModelViewSet):
     queryset = Album.objects.all()
     serializer_class = AlbumSerializer
-    def get_queryset(self):
-        user_pk = self.kwargs.get("user_pk")
-        if user_pk:
-            return Album.objects.filter(user=user_pk)
-        return super().get_queryset()
-
+    
 class PhotoViewSet(viewsets.ModelViewSet):
     queryset = Photo.objects.all()
     serializer_class = PhotoSerializer
