@@ -1,0 +1,97 @@
+.form-container {
+    max-width: 600px; 
+    margin: 0 auto; 
+    padding: 20px;
+    background-color: #f8f9fa; 
+    border-radius: 8px; 
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+  }
+  
+  .container h1 {
+    text-align: center;
+  }
+  
+
+table.table-striped {
+  width: 100%;           
+  margin-top: 20px;     
+  border-collapse: collapse;  
+}
+
+
+table.table-striped th, table.table-striped td {
+  padding: 0.75rem;     
+  text-align: center;    
+  vertical-align: middle; 
+  border: 1px solid #dee2e6;  
+}
+
+
+table.table-striped th {
+  background-color: #f8f9fa; 
+  font-weight: bold;          
+}
+
+
+table.table-striped tbody tr:nth-child(even) {
+  background-color: #f2f2f2; 
+}
+
+
+.alert {
+  margin-top: 20px;     
+}
+
+
+h1 {
+  margin-bottom: 20px;  
+}
+
+
+.btn-sm {
+  padding: 5px 10px; 
+  font-size: 0.875rem; 
+  border-radius: 0.25rem; 
+  text-align: center; 
+}
+
+
+.ms-2 {
+  margin-left: 0.5rem; 
+}
+
+
+
+h1 {
+  color: #333;
+  font-size: 2rem;
+}
+
+.form-group {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.form-control {
+  font-size: 16px;
+  padding: 10px;
+}
+
+.btn-primary {
+  background-color: #007bff;
+  border: none;
+  padding: 7px 20px;
+  font-size: 16px;
+}
+
+.btn-secondary {
+  background-color: #6c757d;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+}
+
+.alert-danger {
+  margin-top: 20px;
+  font-weight: bold;
+}

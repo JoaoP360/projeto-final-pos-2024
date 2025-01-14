@@ -1,0 +1,40 @@
+.btn-custom {
+    padding: 10px 20px; 
+    border-radius: 8px; 
+    font-weight: 600; 
+    text-transform: uppercase;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+    transition: all 0.3s ease; 
+  }
+  
+  /* Botão secundário */
+  .btn-secondary {
+    background-color: #6c757d;
+    border: 1px solid #6c757d;
+  }
+  
+  /* Botão primário */
+  .btn-primary {
+    background-color: #007bff; 
+    border: 1px solid #007bff;
+  }
+  
+  
+  .btn-custom:hover {
+    background-color: #0056b3; 
+    color: #fff; 
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15); 
+    transform: translateY(-2px); 
+  }
+  
+  
+  .btn-custom-link {
+    background-color: transparent;
+    border: none;
+    text-decoration: underline;
+    color: #007bff;
+  }
+  
+  .btn-custom-link:hover {
+    color: #0056b3;
+  }

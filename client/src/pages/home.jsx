@@ -1,70 +1,46 @@
-import UserWapper from "../functions/userWrapper";
-import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "./home.css"; 
 
-const userWrapper = new UserWapper();
 
 const Home = () => {
-  const [users, setUsers] = useState([]); // Inicializa como array vazio
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
-
-  const fetchUsers = async () => {
-    try {
-      setIsLoading(true);
-      const response = await userWrapper.listUser("users/");
-      setUsers(response?.data || []); // Garante que `users` será um array
-    } catch (error) {
-      setError(error.message || "Ocorreu um erro ao carregar os usuários.");
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchUsers();
-  }, []);
-
   return (
     <>
-      <div className="mb-4 d-flex gap-2">
-        <Link to={"/usuarios/cadastrar/"} className="btn btn-secondary">
+      <div className="text-center mb-5">
+        <h1>Bem-vindo ao Sistema</h1>
+        <p className="lead">
+          Aqui você pode gerenciar usuários, tarefas, álbuns e fotos. Escolha uma das opções abaixo para começar.
+        </p>
+      </div>
+
+      <div className="mb-4 d-flex flex-wrap gap-3 justify-content-center">
+        <Link to={"/usuarios/cadastrar/"} className="btn btn-primary btn-custom">
           Cadastrar usuário
         </Link>
-        <Link to={"/tarefas/cadastrar/"} className="btn btn-primary">
+        <Link to={"/tarefas/cadastrar/"} className="btn btn-primary btn-custom">
           Cadastrar tarefa
         </Link>
-        <Link to={"/albuns/cadastrar/"} className="btn btn-primary">
+        <Link to={"/albuns/cadastrar/"} className="btn btn-primary btn-custom">
           Cadastrar álbum
         </Link>
-        <Link to={"/fotos/cadastrar/"} className="btn btn-primary">
+        <Link to={"/fotos/cadastrar/"} className="btn btn-primary btn-custom">
           Cadastrar foto
         </Link>
       </div>
 
-      <h1>Usuários</h1>
+      <div className="text-center mt-5">
+        <h2>Informações do Sistema</h2>
+        <p className="lead">
+          O sistema permite gerenciar de forma eficiente o cadastro e controle de usuários, tarefas, álbuns e fotos. 
+          Utilize os links acima para navegar e adicionar novos dados ao sistema.
+        </p>
+      </div>
 
-      {isLoading && <p>Carregando usuários...</p>}
-      {error && <p className="text-danger">{error}</p>}
-
-      {!isLoading && !error && users.length === 0 && (
-        <p>Nenhum usuário encontrado.</p>
-      )}
-
-      {!isLoading && !error && users.length > 0 && (
-        <div className="mb-4 d-flex gap-2">
-          {users.map((user) => (
-            <Link
-              to={`/usuarios/${user.id}/`}
-              key={user.id}
-              className="btn btn-primary"
-            >
-              {user.name}
-            </Link>
-          ))}
-        </div>
-      )}
+      <div className="mt-5 text-center">
+        <Link to="/tarefas/" className="btn btn-info btn-custom">
+          Ver tarefas cadastradas
+        </Link>
+      </div>
     </>
   );
 };

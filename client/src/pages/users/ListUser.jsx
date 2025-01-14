@@ -35,7 +35,7 @@ const ListUsers = () => {
     return (
         <>
             <h1>Usuários</h1>
-            <Link to={'/usuarios/cadastrar/'} className='btn btn-primary'>
+            <Link to={'/usuarios/cadastrar/'} className='btn btn-primary mb-3'>
                 Cadastrar usuário
             </Link>
 
@@ -53,7 +53,7 @@ const ListUsers = () => {
             )}
 
             {!isLoading && !error && Array.isArray(users) && users.length > 0 && (
-                <table className='table table-striped'>
+                <table className="table table-striped">
                     <thead>
                         <tr>
                             <th>ID</th>
@@ -67,8 +67,15 @@ const ListUsers = () => {
                                 <td>{user.id}</td>
                                 <td><Link to={`/usuarios/${user.id}`}>{user.name}</Link></td>
                                 <td>
-                                    <Link to={`/usuarios/editar/${user.id}/`} className='btn btn-primary'>Editar</Link>
-                                    <Link to={`/usuarios/deletar/${user.id}/`} className='btn btn-danger'>Deletar</Link>
+                                    
+                                    <Link to={`/usuarios/editar/${user.id}/`} className="btn btn-outline-primary btn-sm">
+                                        Editar
+                                    </Link>
+
+                                    
+                                    <Link to={`/usuarios/deletar/${user.id}/`} className="btn btn-outline-danger btn-sm ms-2">
+                                        Deletar
+                                    </Link>
                                 </td>
                             </tr>
                         ))}
@@ -80,3 +87,4 @@ const ListUsers = () => {
 };
 
 export default ListUsers;
+    

@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { Link, useLocation } from 'react-router-dom';
 import PhotoWrapper from "../../functions/photoWrapper";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import './ListPhotos.css';
+
 
 const photoWrapper = new PhotoWrapper()
 

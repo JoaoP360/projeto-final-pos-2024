@@ -3,6 +3,7 @@ import { useNavigate } from "react-router";
 import AlbumWrapper from "../../functions/albumWrapper";
 import UserWrapper from "../../functions/userWrapper";
 import "bootstrap/dist/css/bootstrap.min.css";
+import './ListAlbuns'; 
 
 const albumWrapper = new AlbumWrapper();
 const userWrapper = new UserWrapper();
@@ -45,51 +46,55 @@ const CreateAlbum = () => {
   };
 
   return (
-    <>
-      <h1>Criar álbum</h1>
-      <form className="row" onSubmit={handleSubmit}>
-        <div className="col-md-12 mb-3">
-          <label htmlFor="title" className="form-label">
-            Título
-          </label>
-          <input
-            type="text"
-            name="title"
-            id="title"
-            className="form-control"
-            required
-            onChange={handleChange}
-          />
-        </div>
-        <div className="col-md-12 mb-3">
-          <label htmlFor="user" className="form-label">
-            Usuário
-          </label>
-          <select
-            name="user"
-            id="user"
-            className={`form-select ${fieldErrors.user ? "is-invalid" : ""}`}
-            required
-            onChange={handleChange}
-          >
-            <option value="">Selecione um usuário</option>
-            {users.map((user) => (
-              <option key={user.id} value={user.id}>
-                {user.name}
-              </option>
-            ))}
-          </select>
-          {fieldErrors.url && (
-            <div className="invalid-feedback">{fieldErrors.url}</div>
-          )}
-        </div>
-        <div>
-          <button type="submit" className="btn btn-success">
-            Cadastrar
-          </button>
-        </div>
-      </form>
-    </>
+    <div className="container mt-4">
+      <h1 className="mb-4">Criar Álbum</h1>
+      {error && <div className="alert alert-danger">{error}</div>}
+
+      <div className="form-container">
+        <form className="row" onSubmit={handleSubmit}>
+          <div className="col-md-12 mb-3">
+            <label htmlFor="title" className="form-label">
+              Título
+            </label>
+            <input
+              type="text"
+              name="title"
+              id="title"
+              className="form-control"
+              required
+              onChange={handleChange}
+            />
+          </div>
+          <div className="col-md-12 mb-3">
+            <label htmlFor="user" className="form-label">
+              Usuário
+            </label>
+            <select
+              name="user"
+              id="user"
+              className={`form-select ${fieldErrors.user ? "is-invalid" : ""}`}
+              required
+              onChange={handleChange}
+            >
+              <option value="">Selecione um usuário</option>
+              {users.map((user) => (
+                <option key={user.id} value={user.id}>
+                  {user.name}
+                </option>
+              ))}
+            </select>
+            {fieldErrors.user && (
+              <div className="invalid-feedback">{fieldErrors.user}</div>
+            )}
+          </div>
+          <div>
+            <button type="submit" className="btn btn-success w-100">
+              Cadastrar
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
   );
 };
 

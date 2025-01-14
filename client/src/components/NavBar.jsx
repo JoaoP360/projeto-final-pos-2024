@@ -6,7 +6,7 @@ const Navbar = () => {
     const [menuOpen, setMenuOpen] = useState(false)
     return (
         <nav>
-            <Link to={'/'} className="brand"> NavBar Poggers </Link>
+            <Link to={'/'} className="brand"> Banco de Dados </Link>
             <div className='menu' onClick={() => setMenuOpen(!menuOpen)}>
                 <span></span>
                 <span></span>
